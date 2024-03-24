@@ -39,4 +39,14 @@
     $filename = (str_replace(' ', '-', strtolower($title))) . '-' . (str_replace(' ', '-', strtolower($author))) . '-' . $timestamp . '.md';
     echo "Filename: $filename \n";
     
+    /*
+    Task 4: Create a markdown file with the generated filename in the specified output directory
+    
+    Resources:
+        https://stackoverflow.com/questions/34624784/use-fwrite-to-create-an-md-file
+        
+    */
+
+    $markdown_file = fopen($output_directory . '/' . $filename, 'w') or die("Unable to create file!");
+    fclose($markdown_file);
 ?>
