@@ -37,6 +37,7 @@
 
     $timestamp = date("YmdHis");
     $filename = (str_replace(' ', '-', strtolower($title))) . '-' . (str_replace(' ', '-', strtolower($author))) . '-' . $timestamp . '.md';
+    $filepath = $output_directory . '/' . $filename;
     echo "Filename: $filename \n";
     
     /*
@@ -44,9 +45,28 @@
     
     Resources:
         https://stackoverflow.com/questions/34624784/use-fwrite-to-create-an-md-file
-        
     */
 
-    $markdown_file = fopen($output_directory . '/' . $filename, 'w') or die("Unable to create file!");
+    $markdown_file = fopen($filepath, 'w') or die("Unable to create file!");
+    
+    /*
+    Task 5: Write the blog post template to the markdown file, including the 
+    title, author, category, and current date as metadata, 
+    followed by a placeholder for the blog post content.
+ 
+    Resources:
+       https://www.w3schools.com/php/php_file_open.asp
+       https://stackoverflow.com/questions/34624784/use-fwrite-to-create-an-md-file 
+    */
+
+    $content = "---\n";
+    $content .= "title: \"$title\"\n";
+    $content .= "author: \"$author\"\n";
+    $content .= "category: \"$category\"\n";
+    $content .= "date: \"" . date("Y-m-d") . "\"\n";
+    $content .= "---\n\n";
+    $content .= "Write your blog post content here...\n";
+
+    fwrite($markdown_file, $content);
     fclose($markdown_file);
 ?>
