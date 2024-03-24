@@ -69,4 +69,26 @@
 
     fwrite($markdown_file, $content);
     fclose($markdown_file);
+
+    /*
+    Task 6: After generating the markdown file, output the file path to the user.
+    */
+
+    echo "File created under this path: $filepath\n\n";
+
+    if (file_exists($filepath)) 
+    {
+        $file = fopen($filepath, "r");
+
+        while (!feof($file)) {
+            $line = fgets($file);
+            echo $line;
+        }
+
+        fclose($file);
+    } 
+    else 
+    {
+        echo "File not found.";
+    }
 ?>
