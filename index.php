@@ -39,7 +39,6 @@
         $is_edited = true;
     } while (empty($title) || empty($author) || empty($categories));
     
-
     /*
     Task 2: Accept an optional command-line argument for the output directory. 
     If no output directory is provided, use the current working directory.
@@ -53,7 +52,6 @@
     if (trim($output_directory) == '') {
         $output_directory = getcwd();
     }
-    echo "\nChoosen directory: $output_directory \n";
 
     /*
     Task 3: Generate a unique filename for the blog post using the format 
@@ -64,8 +62,22 @@
         https://www.w3schools.com/php/php_date.asp
     */
 
-    $timestamp = date("YmdHis");
-    $filename = (str_replace(' ', '-', strtolower($title))) . '-' . (str_replace(' ', '-', strtolower($author))) . '-' . $timestamp . '.md';
+    /*
+    Bonus 3: Allow users to provide a custom date format (e.g., "Y-m-d" or "F j, Y") as an optional command-line argument.
+
+    Resources:
+        https://www.w3schools.com/php/func_date_date_format.asp
+        https://tecadmin.net/validate-date-string-in-php/
+        https://www.javatpoint.com/how-to-change-date-format-in-php
+    */
+
+    do {
+        $date_format = (string)readline("Date format: ");
+    } while (empty($date_format));
+    
+    $timestamp = date("$date_format");
+
+    $filename = (str_replace(' ', '-', strtolower($title))) . '-' . (str_replace(' ', '-', strtolower($author))) . '-' . date("Y-m-d-H-i-s") . '.md';
     $filepath = $output_directory . '/' . $filename;
     echo "Filename: $filename \n";
     
@@ -92,7 +104,7 @@
     $content .= "title: \"$title\"\n";
     $content .= "author: \"$author\"\n";
     $content .= "categories: [\"" . implode('", "', $categories) . "\"]\n";
-    $content .= "date: \"" . date("Y-m-d") . "\"\n";
+    $content .= "date: \"" . $timestamp . "\"\n";
     $content .= "---\n\n";
     $content .= "Write your blog post content here...\n";
 
