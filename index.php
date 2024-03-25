@@ -14,6 +14,15 @@
         https://www.php.net/manual/en/control-structures.do.while.php
     */
 
+    /*
+    Bonus 2: Allow users to input multiple categories separated by commas, and store them as an array in the metadata
+
+    Resources:
+        https://www.w3schools.com/php/func_string_explode.asp
+        http://www.php.su/array_map
+        https://stackoverflow.com/questions/18275921/array-map-and-trim-not-trimming-white-space-from-values
+    */
+
     $is_edited = false;
     do 
     {
@@ -23,10 +32,12 @@
         }
         $title = (string)readline("Blog post title: ");
         $author = (string)readline("Author: ");
-        $category = (string)readline("Category: ");
+        $category = (string)readline("Category, separated by commas: ");
+        $categories = explode(',', $category);
+        $categories = array_map('trim', $categories);
 
         $is_edited = true;
-    } while (empty($title) || empty($author) || empty($category));
+    } while (empty($title) || empty($author) || empty($categories));
     
 
     /*
@@ -42,7 +53,7 @@
     if (trim($output_directory) == '') {
         $output_directory = getcwd();
     }
-    echo "Choosen directory: $output_directory \n";
+    echo "\nChoosen directory: $output_directory \n";
 
     /*
     Task 3: Generate a unique filename for the blog post using the format 
@@ -80,7 +91,7 @@
     $content = "---\n";
     $content .= "title: \"$title\"\n";
     $content .= "author: \"$author\"\n";
-    $content .= "category: \"$category\"\n";
+    $content .= "categories: [\"" . implode('", "', $categories) . "\"]\n";
     $content .= "date: \"" . date("Y-m-d") . "\"\n";
     $content .= "---\n\n";
     $content .= "Write your blog post content here...\n";
