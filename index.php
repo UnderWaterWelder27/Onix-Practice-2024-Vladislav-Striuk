@@ -7,9 +7,27 @@
         https://www.w3schools.com/php/php_file_open.asp#:~:text=PHP%20Read%20Single%20Line%20%2D%20fgets,single%20line%20from%20a%20file.
     */
 
-    $title = (string)readline("Blog post title: ");
-    $author = (string)readline("Author: ");
-    $category = (string)readline("Category: ");
+    /*
+    Bonus 1: Implement input validation to ensure that the user provides a non-empty title, author, and category
+
+    Resources:
+        https://www.php.net/manual/en/control-structures.do.while.php
+    */
+
+    $is_edited = false;
+    do 
+    {
+        if ($is_edited == true) 
+        {
+            echo "Please, input non empty inforamtion!\n\n";
+        }
+        $title = (string)readline("Blog post title: ");
+        $author = (string)readline("Author: ");
+        $category = (string)readline("Category: ");
+
+        $is_edited = true;
+    } while (empty($title) || empty($author) || empty($category));
+    
 
     /*
     Task 2: Accept an optional command-line argument for the output directory. 
